@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "Stacks"
+version = "0.1.0"
+description = "Stacks"
+authors = [
+    {name = "workonfire", email = "kolucki62@gmail.com"},
+]
+dependencies = [
+    "PyGObject>=3.42.0",
+]
+requires-python = ">=3.10"
+
+[project.scripts]
+my-gtk4-app = "src.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
