@@ -20,10 +20,17 @@ class StacksApplication(Adw.Application):
 
     def on_activate(self, app):
         self.load_css()
+        self.load_icons()
 
         if not hasattr(self, 'win') or self.win is None:
             self.win = MainWindow(application=app)
         self.win.present()
+
+    @staticmethod
+    def load_icons():
+        display = Gdk.Display.get_default()
+        icon_theme = Gtk.IconTheme.get_for_display(display)
+        icon_theme.add_search_path("icons")
 
     @staticmethod
     def load_css():
