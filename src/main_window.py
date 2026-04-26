@@ -10,6 +10,7 @@ from uno.game import Game, Player, Card, Turn, GameEventType
 from main_view import MainView
 from game_view import GameView
 from about_dialog import show_about
+from i18n import _
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -38,13 +39,13 @@ class MainWindow(Adw.ApplicationWindow):
         icon = Gtk.Image.new_from_icon_name("go-previous-symbolic")
         self.back_btn.set_child(icon)
         self.back_btn.set_valign(Gtk.Align.CENTER)
-        self.back_btn.set_tooltip_text("Back to Menu")
+        self.back_btn.set_tooltip_text(_("Back to Menu"))
         self.back_btn.connect("clicked", self.on_back_clicked)
         self.back_btn.set_visible(False)
 
         info_btn = Gtk.Button(icon_name="dialog-information-symbolic")
         info_btn.set_valign(Gtk.Align.CENTER)
-        info_btn.set_tooltip_text("About")
+        info_btn.set_tooltip_text(_("About"))
         info_btn.connect("clicked", self.on_info_clicked)
 
         self.header_bar = Adw.HeaderBar()
@@ -65,11 +66,11 @@ class MainWindow(Adw.ApplicationWindow):
 
         # Inicjalizuj grę
         if vs_computer:
-            p1 = Player("You")
-            p2 = Player("Computer")
+            p1 = Player(_("You"))
+            p2 = Player(_("Computer"))
             player_list = [p1, p2]
         else:
-            player_list = [Player(f"Player {i + 1}" if i > 0 else "You") for i in range(players)]
+            player_list = [Player(f"Player {i + 1}" if i > 0 else "You") for i in range(players)] # TODO
 
         self.human_player = player_list[0]
 
@@ -99,7 +100,7 @@ class MainWindow(Adw.ApplicationWindow):
                 callback(None)
 
         except Exception as e:
-            logging.error(f"Błąd przy graniu karty: {e}")
+            logging.error(_(f"Error while playing card: {e}"))
             self.game_view.show_error(str(e))
 
     def on_draw_card(self, callback):

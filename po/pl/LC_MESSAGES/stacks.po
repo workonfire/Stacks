@@ -1,0 +1,125 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Stacks\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pl\n"
+
+msgid "Welcome to Stacks!"
+msgstr "Witamy w Stacks!"
+
+msgid "Configure your game settings"
+msgstr "Skonfiguruj ustawienia gry"
+
+msgid "Game Mode"
+msgstr "Tryb gry"
+
+msgid "Choose who you want to play with"
+msgstr "Wybierz, z kim chcesz grać"
+
+msgid "Player vs Player"
+msgstr "Gracz kontra gracz"
+
+msgid "Player vs Computer"
+msgstr "Gracz kontra komputer"
+
+msgid "Game Settings"
+msgstr "Ustawienia gry"
+
+msgid "Configure how the game starts"
+msgstr "Skonfiguruj rozpoczęcie gry"
+
+msgid "Starting cards"
+msgstr "Karty początkowe"
+
+msgid "How many cards to give each player upon game launch"
+msgstr "Ile kart rozdać każdemu graczowi na początku gry"
+
+msgid "Number of players"
+msgstr "Liczba graczy"
+
+msgid "How many players will participate"
+msgstr "Ilu graczy weźmie udział"
+
+msgid "Card stacking"
+msgstr "Dokładanie kart"
+
+msgid "Automatically play similar cards"
+msgstr "Automatycznie zagrywaj podobne karty"
+
+msgid "Start New Game"
+msgstr "Rozpocznij nową grę"
+
+msgid "Settings"
+msgstr "Ustawienia"
+
+msgid "Back to Menu"
+msgstr "Powrót do menu"
+
+msgid "About"
+msgstr "O programie"
+
+msgid "You"
+msgstr "Ty"
+
+msgid "Computer"
+msgstr "Komputer"
+
+msgid "Player {number}"
+msgstr "Gracz {number}"
+
+msgid "<b>Player:</b> {name}"
+msgstr "<b>Gracz:</b> {name}"
+
+msgid "<b>Cards on table:</b> {count}"
+msgstr "<b>Karty na stole:</b> {count}"
+
+msgid "<b>Last card:</b>"
+msgstr "<b>Ostatnia karta:</b>"
+
+msgid "<b>Your cards:</b>"
+msgstr "<b>Twoje karty:</b>"
+
+msgid "Thinking..."
+msgstr "Myślę..."
+
+msgid "Draw a card"
+msgstr "Dobierz kartę"
+
+msgid "Waiting for move: {name}"
+msgstr "Czekanie na ruch: {name}"
+
+msgid "Cards: {count}"
+msgstr "Karty: {count}"
+
+msgid "Choose color"
+msgstr "Wybierz kolor"
+
+msgid "You played a wildcard. Which color do you choose?"
+msgstr "Zagrano kartę specjalną. Jaki kolor wybierasz?"
+
+msgid "Blue"
+msgstr "Niebieski"
+
+msgid "Red"
+msgstr "Czerwony"
+
+msgid "Green"
+msgstr "Zielony"
+
+msgid "Yellow"
+msgstr "Żółty"
+
+msgid "Error"
+msgstr "Błąd"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "An error occurred during CSS loading: {error}"
+msgstr "Wystąpił błąd podczas ładowania CSS: {error}"
+
+msgid "Error while playing card: {error}"
+msgstr "Błąd podczas zagrywania karty: {error}"
+
+msgid "Error during computer move: {error}"
+msgstr "Błąd podczas ruchu komputera: {error}"

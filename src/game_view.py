@@ -8,6 +8,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib
 from uno.game import Game, Player, Card, Turn, GameEventType
 from uno.enums import CardColor
+from i18n import _
 
 
 class CardButton(Gtk.Button):
@@ -82,11 +83,11 @@ class GameView(Gtk.Box):
         info_box.set_halign(Gtk.Align.CENTER)
 
         current_player_label = Gtk.Label()
-        current_player_label.set_markup(f"<b>Gracz:</b> {self.game.turn.name}")
+        current_player_label.set_markup(_("<b>Player:</b> {name}").format(name=self.game.turn.name))
         info_box.append(current_player_label)
 
         cards_left_label = Gtk.Label()
-        cards_left_label.set_markup(f"<b>Karty na stole:</b> {len(self.game.stack)}")
+        cards_left_label.set_markup(_("<b>Cards on table:</b> {count}").format(count=len(self.game.stack)))
         info_box.append(cards_left_label)
 
         self.content_box.append(info_box)
@@ -94,12 +95,15 @@ class GameView(Gtk.Box):
         # Ostatnia grana karta
         last_card_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
         last_card_label = Gtk.Label()
-        last_card_label.set_markup("<b>Ostatnia karta:</b>")
+        last_card_label.set_markup(_("<b>Last card:</b>"))
         last_card_box.append(last_card_label)
 
         last_card = self.game.last_played_card
         last_card_display = Gtk.Label(
-            label=f"{last_card.card_type.name.replace('CARD_', '')}\n{last_card.color.name if last_card.color else 'WILDCARD'}"
+            label="{card_type}\n{color}".format(
+                card_type=last_card.card_type.name.replace('CARD_', ''),
+                color=last_card.color.name if last_card.color else _("WILDCARD"),
+            )
         )
         last_card_display.set_justify(Gtk.Justification.CENTER)
         last_card_display.add_css_class(f"card-{last_card.color.name.lower() if last_card.color else 'gray'}")
@@ -121,7 +125,7 @@ class GameView(Gtk.Box):
 
         # Ręka gracza
         hand_label = Gtk.Label()
-        hand_label.set_markup("<b>Twoje karty:</b>")
+        hand_label.set_markup(_("<b>Your cards:</b>"))
         self.content_box.append(hand_label)
 
         hand_box = Gtk.FlowBox()
@@ -146,17 +150,17 @@ class GameView(Gtk.Box):
         action_box.set_margin_top(12)
 
         if self.computer_thinking:
-            thinking_label = Gtk.Label(label="Thinking...")
+            thinking_label = Gtk.Label(label=_("Thinking..."))
             thinking_label.add_css_class("title-3")
             action_box.append(thinking_label)
         elif self.game.turn == self.human_player:
-            draw_btn = Gtk.Button(label="Wylosuj kartę")
+            draw_btn = Gtk.Button(label=_("Draw a card"))
             draw_btn.add_css_class("suggested-action")
             draw_btn.set_sensitive(not self.computer_thinking)
             draw_btn.connect("clicked", lambda w: self._on_draw_card())
             action_box.append(draw_btn)
         else:
-            info_label = Gtk.Label(label=f"Czeka na ruch: {self.game.turn.name}")
+            info_label = Gtk.Label(label=_("Waiting for move: {name}").format(name=self.game.turn.name))
             info_label.add_css_class("title-3")
             action_box.append(info_label)
 
@@ -171,7 +175,7 @@ class GameView(Gtk.Box):
         name_label.set_markup(f"<b>{player.name}</b>")
         box.append(name_label)
 
-        cards_count_label = Gtk.Label(label=f"Karty: {len(player.hand)}")
+        cards_count_label = Gtk.Label(label=_("Cards: {count}").format(count=len(player.hand)))
         box.append(cards_count_label)
 
         if player == self.game.turn:
@@ -228,7 +232,7 @@ class GameView(Gtk.Box):
                 self.game.deal_card(self.game.turn)
 
         except Exception as e:
-            logging.error(f"Błąd przy ruchu komputera: {e}")
+            logging.error(_("Error during computer move: {error}").format(error=e))
 
         self.computer_thinking = False
         self.update_game()
@@ -242,12 +246,17 @@ class GameView(Gtk.Box):
     def show_color_picker(self, callback: Callable):
         """Pokazuje dialog wyboru koloru"""
         dialog = Adw.MessageDialog()
-        dialog.set_heading("Wybierz kolor")
-        dialog.set_body("Wybrałeś kartę wildcard. Jaki kolor wybrałeś?")
+        dialog.set_heading(_("Choose color"))
+        dialog.set_body(_("You played a wildcard. Which color do you choose?"))
 
-        colors = ['BLUE', 'RED', 'GREEN', 'YELLOW']
-        for i, color in enumerate(colors):
-            dialog.add_response(str(i), color)
+        colors = [
+            ("BLUE", _("Blue")),
+            ("RED", _("Red")),
+            ("GREEN", _("Green")),
+            ("YELLOW", _("Yellow")),
+        ]
+        for i, (_color_id, color_label) in enumerate(colors):
+            dialog.add_response(str(i), color_label)
 
         if self.parent_window:
             dialog.set_transient_for(self.parent_window)
@@ -263,9 +272,9 @@ class GameView(Gtk.Box):
     def show_error(self, message: str):
         """Pokazuje dialog z błędem"""
         dialog = Adw.MessageDialog()
-        dialog.set_heading("Błąd")
+        dialog.set_heading(_("Error"))
         dialog.set_body(message)
-        dialog.add_response("ok", "OK")
+        dialog.add_response("ok", _("OK"))
         if self.parent_window:
             dialog.set_transient_for(self.parent_window)
         dialog.present()
