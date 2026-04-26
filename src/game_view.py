@@ -166,7 +166,7 @@ class GameView(Gtk.Box):
     def _check_winner(self) -> bool:
         winner = self.game.get_winner()
         if winner:
-            logging.debug(f"[WIN] {winner.name} has won the game!")
+            logging.debug(f"[WIN] {winner.name} won the game!")
             self.game.win(winner)
             self.update_game()
             self.show_winner(winner)
@@ -254,7 +254,7 @@ class GameView(Gtk.Box):
     def show_winner(self, winner: Player):
         dialog = Adw.MessageDialog()
         dialog.set_heading(_("Game over!"))
-        dialog.set_body(_("{name} has won the game!").format(name=winner.name))
+        dialog.set_body(_("{name} won the game!").format(name=winner.name))
         dialog.add_response("ok", _("OK"))
         if self.parent_window:
             dialog.set_transient_for(self.parent_window)

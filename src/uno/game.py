@@ -60,7 +60,7 @@ class Card:
         """
         Compares two cards between their types and colors.
         :param comparator: card object
-        :return: true, if they're similar
+        :return: true if they're similar
         """
         return self.is_wild or self.card_type == comparator.card_type or self.color == comparator.color
 
@@ -68,9 +68,9 @@ class Card:
 class Deck:
     def draw(self, number: int = 1) -> list[Card]:
         """
-        Draws a specified amount of cards.
-        :param number: a number of cards that you want to draw. Default is 1.
-        :return: a list of cards, if the amount is greater than 1.
+        Draws a specified number of cards.
+        :param number: A number of cards that you want to draw. Default is 1.
+        :return: A list of cards, if the amount is greater than 1.
         """
         return [self.stack for _ in range(number)]
 
@@ -86,10 +86,10 @@ class Deck:
 
 
 class Player:
-    def __init__(self, name: str = ''):
+    def __init__(self, name: str = '', is_computer: bool = False):
         self.hand: list[Card] = []
         self.name: str = name
-        self.is_computer: bool = 'computer' in self.name.lower() if self.name is not None else False
+        self.is_computer: bool = is_computer
 
     def format_hand_contents(self) -> str:
         return ', '.join([card.__str__() for card in self.hand])
@@ -120,10 +120,10 @@ class Table:
     def play(self, card: Card, player: Player, stacking_active: bool = False) -> GameEvent:
         """
         Puts the selected card on top of the stack.
-        :param card: card object.
-        :param player: player object.
-        :param stacking_active: describes if the player is currently in the middle of card-stacking.
-        :return: a GameEvent object, could be NO_EVENT, AWAIT_COLOR_INPUT, COLOR_CHANGED or STACKING_ACTIVE
+        :param card: Card object.
+        :param player: Player object.
+        :param stacking_active: Describes if the player is currently in the middle of card-stacking.
+        :return: A GameEvent object - NO_EVENT, AWAIT_COLOR_INPUT, COLOR_CHANGED, or STACKING_ACTIVE
         """
         event: GameEvent = GameEvent(GameEventType.NO_EVENT, {})
 

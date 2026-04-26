@@ -67,7 +67,7 @@ class MainWindow(Adw.ApplicationWindow):
 
         if vs_computer:
             p1 = Player(_("You"))
-            p2 = Player(_("Computer"))
+            p2 = Player(_("Computer"), is_computer=True)
             player_list = [p1, p2]
         else:
             player_list = [Player(f"Player {i + 1}" if i > 0 else "You") for i in range(players)] # TODO
