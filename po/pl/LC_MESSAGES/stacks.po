@@ -123,3 +123,9 @@ msgstr "Błąd podczas zagrywania karty: {error}"
 
 msgid "Error during computer move: {error}"
 msgstr "Błąd podczas ruchu komputera: {error}"
+
+msgid "Game over!"
+msgstr "Koniec gry!"
+
+msgid "{name} has won the game!"
+msgstr "{name} wygrał(a) grę!"

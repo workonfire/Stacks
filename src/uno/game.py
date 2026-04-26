@@ -132,23 +132,28 @@ class Table:
                 raise CardNotInPossessionError(f"The player {player} does not have {card} card.")
             self.stack.insert(0, card)
             player.hand.remove(card)
+            logging.debug(f"[PLAY] {player.name} played {card!r} ({len(player.hand)} cards remaining)")
 
             if card.is_wild:
                 if self.turn.is_computer:
                     new_color: CardColor = Turn(self).most_reasonable_color
+                    card.color = new_color
+                    logging.debug(f"[COLOR] Computer chose color: {new_color.name}")
                     event = GameEvent(GameEventType.COLOR_CHANGED, {'player': self.turn, 'new_color': new_color})
                 else:
+                    logging.debug(f"[COLOR] Awaiting color input from {player.name}")
                     event = GameEvent(GameEventType.AWAIT_COLOR_INPUT, {'player': self.turn}) # Is the payload needed here?
                 if card.card_type == CardType.CARD_PLUS_4:
                     next_player: Player = self.players[(self.turn_index + self.direction) % len(self.players)]
                     new_cards: list[Card] = self.deck.draw(4)
                     next_player.hand.extend(new_cards)
-                logging.debug(f"Card on stack: {self.stack[0]}")
+                    logging.debug(f"[+4] {next_player.name} draws 4 cards (hand: {len(next_player.hand)})")
             else:
                 if card.card_type == CardType.CARD_PLUS_2:  # TODO: Queue +2 and +4 stacking
                     next_player = self.players[(self.turn_index + self.direction) % len(self.players)]
                     new_cards = self.deck.draw(2)
                     next_player.hand.extend(new_cards)
+                    logging.debug(f"[+2] {next_player.name} draws 2 cards (hand: {len(next_player.hand)})")
                 if self.rules.get('card_stacking') and not stacking_active:
                     stacked_cards: list[Card] = []
                     for playable_card in Turn(self).playable_cards:
@@ -156,16 +161,23 @@ class Table:
                             self.play(playable_card, player, stacking_active=True)
                             stacked_cards.append(playable_card)
                             # TODO: +2 and/or +4 stacking
+                    if stacked_cards:
+                        logging.debug(f"[STACK] {player.name} stacked {len(stacked_cards)} extra card(s): {[repr(c) for c in stacked_cards]}")
                     event = GameEvent(GameEventType.STACKING_ACTIVE, {'stacked_cards': stacked_cards})
             if not stacking_active:
                 if card.card_type == CardType.CARD_SKIP:
+                    logging.debug(f"[SKIP] {self.next_turn.name} will be skipped")
                     self.skip_next_player()
                 elif card.card_type == CardType.CARD_REVERSE:
                     if len(self.players) > 2:
+                        logging.debug(f"[REVERSE] Turn order reversed")
                         self.reverse_queue()
                         self.set_next_turn()
                 else:
                     self.set_next_turn()
+                logging.debug(f"[TURN] Next turn: {self.turn.name}")
+                for p in self.players:
+                    logging.debug(f"[HAND] {p.name} ({len(p.hand)}): {[repr(c) for c in p.hand]}")
         else:
             raise CardNotPlayableError(f"The player {player} cannot play with {card}.")
         return event
@@ -176,6 +188,8 @@ class Table:
         """
         cards = self.deck.draw(amount)
         player.hand.extend(cards)
+        logging.debug(f"[DRAW] {player.name} drew {amount} card(s): {[repr(c) for c in cards]}")
+        logging.debug(f"[HAND] {player.name} ({len(player.hand)}): {[repr(c) for c in player.hand]}")
 
     @property
     def next_turn(self) -> Player:

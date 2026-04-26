@@ -5,8 +5,8 @@ from typing import Optional
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
-from gi.repository import Gtk, Adw, GLib
-from uno.game import Game, Player, Card, Turn, GameEventType
+from gi.repository import Gtk, Adw
+from uno.game import Game, Player
 from main_view import MainView
 from game_view import GameView
 from about_dialog import show_about
@@ -63,8 +63,8 @@ class MainWindow(Adw.ApplicationWindow):
         players = int(self.main_view.players_spin.get_value())
         card_stacking = self.main_view.card_stacking.get_active()
         vs_computer = self.main_view.is_vs_computer()
+        logging.debug(f"[GAME] New game started: {players} player(s), {cards} starting cards, stacking={card_stacking}, vs_computer={vs_computer}")
 
-        # Inicjalizuj grę
         if vs_computer:
             p1 = Player(_("You"))
             p2 = Player(_("Computer"))
@@ -82,36 +82,9 @@ class MainWindow(Adw.ApplicationWindow):
 
         self.game = Game(player_list, rules)
 
-        # Aktualizuj widok gry
-        self.game_view.setup_game(self.game, self.human_player, self.on_card_played, self.on_draw_card,
-                                  self.on_color_selected)
+        self.game_view.setup_game(self.game, self.human_player)
         self.back_btn.set_visible(True)
         self.stack.set_visible_child_name("game")
-
-    def on_card_played(self, card: Card, callback):
-        """Callback gdy gracz zagrał kartę"""
-        try:
-            event = self.game.play(card, self.human_player)
-
-            # Jeśli to karta wildcard, poproś o wybranie koloru
-            if event.type == GameEventType.AWAIT_COLOR_INPUT:
-                self.game_view.show_color_picker(callback)
-            else:
-                callback(None)
-
-        except Exception as e:
-            logging.error(_(f"Error while playing card: {e}"))
-            self.game_view.show_error(str(e))
-
-    def on_draw_card(self, callback):
-        """Callback gdy gracz wylosuje kartę"""
-        self.game.deal_card(self.human_player)
-        callback()
-
-    def on_color_selected(self, color, callback):
-        """Callback gdy gracz wybrał kolor dla karty wildcard"""
-        self.game.last_played_card.color = color
-        callback()
 
     def on_back_clicked(self, button):
         self.stack.set_visible_child_name("main")
