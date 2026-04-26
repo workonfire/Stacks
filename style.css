@@ -1,0 +1,135 @@
+/* Karty */
+.card-button {
+    border-radius: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    min-width: 80px;
+    min-height: 120px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card-button:disabled {
+    opacity: 0.5;
+}
+
+/* Kolory kart */
+.card-blue {
+    background-color: #3498db;
+    color: white;
+}
+
+.card-red {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.card-green {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.card-yellow {
+    background-color: #f39c12;
+    color: white;
+}
+
+.card-gray {
+    background-color: #95a5a6;
+    color: white;
+}
+
+/* Gracze */
+.player-active {
+    background-color: rgba(52, 152, 219, 0.2);
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+/* Tekst */
+.title-1 {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.title-2 {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.title-3 {
+    font-size: 1.3em;
+    font-weight: bold;
+}/* Karty */
+.card-button {
+    border-radius: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    min-width: 80px;
+    min-height: 120px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card-button:disabled {
+    opacity: 0.5;
+}
+
+/* Kolory kart */
+.card-blue {
+    background-color: #3498db;
+    color: white;
+}
+
+.card-red {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.card-green {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.card-yellow {
+    background-color: #f39c12;
+    color: white;
+}
+
+.card-gray {
+    background-color: #95a5a6;
+    color: white;
+}
+
+/* Gracze */
+.player-active {
+    background-color: rgba(52, 152, 219, 0.2);
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+/* Tekst */
+.title-1 {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.title-2 {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.title-3 {
+    font-size: 1.3em;
+    font-weight: bold;
+}

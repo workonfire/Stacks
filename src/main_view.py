@@ -20,6 +20,19 @@ class MainView(Gtk.Box):
         subtitle_label.add_css_class("subtitle")
         self.append(subtitle_label)
 
+        # Wybór trybu gry
+        mode_group = Adw.PreferencesGroup()
+        mode_group.set_title("Game Mode")
+        mode_group.set_description("Choose who you want to play with")
+
+        self.game_mode = Adw.ComboRow()
+        self.game_mode.set_title("Game Mode")
+        self.game_mode.set_model(Gtk.StringList.new(["Player vs Player", "Player vs Computer"]))
+        self.game_mode.set_selected(0)
+        mode_group.add(self.game_mode)
+
+        self.append(mode_group)
+
         prefs_group = Adw.PreferencesGroup()
         prefs_group.set_title("Game Settings")
         prefs_group.set_description("Configure how the game starts")
@@ -62,3 +75,7 @@ class MainView(Gtk.Box):
         buttons_box.append(self.settings_btn)
 
         self.append(buttons_box)
+
+    def is_vs_computer(self) -> bool:
+        """Zwraca True jeśli wybrano tryb Player vs Computer"""
+        return self.game_mode.get_selected() == 1
