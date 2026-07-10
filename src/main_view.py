@@ -1,11 +1,49 @@
 import gi
+
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Adw
 from i18n import _
 
+
 class MainView(Gtk.Box):
+    def __init__(self):
+        super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=24)
+        self.set_margin_top(48)
+        self.set_margin_bottom(48)
+        self.set_margin_start(32)
+        self.set_margin_end(32)
+        self.set_valign(Gtk.Align.CENTER)
+        self.set_halign(Gtk.Align.CENTER)
+
+        icon = Gtk.Image.new_from_icon_name("pl.workonfire.Stacks")
+        icon.set_pixel_size(128)
+        self.append(icon)
+
+        title_label = Gtk.Label(label=_("Welcome to Stacks!"))
+        title_label.add_css_class("title-1")
+        title_label.set_justify(Gtk.Justification.CENTER)
+        self.append(title_label)
+
+        buttons_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        buttons_box.set_halign(Gtk.Align.CENTER)
+
+        self.singleplayer_btn = Gtk.Button(label=_("Singleplayer"))
+        self.singleplayer_btn.set_size_request(160, 52)
+        self.singleplayer_btn.add_css_class("pill")
+        self.singleplayer_btn.add_css_class("suggested-action")
+        buttons_box.append(self.singleplayer_btn)
+
+        self.multiplayer_btn = Gtk.Button(label=_("Multiplayer"))
+        self.multiplayer_btn.set_size_request(160, 52)
+        self.multiplayer_btn.add_css_class("pill")
+        buttons_box.append(self.multiplayer_btn)
+
+        self.append(buttons_box)
+
+
+class SingleplayerSetupView(Gtk.Box):
     def __init__(self):
         super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=20)
         self.set_margin_top(20)
@@ -21,18 +59,6 @@ class MainView(Gtk.Box):
         subtitle_label.add_css_class("subtitle")
         self.append(subtitle_label)
 
-        mode_group = Adw.PreferencesGroup()
-        mode_group.set_title(_("Game Mode"))
-        mode_group.set_description(_("Choose who you want to play with"))
-
-        self.game_mode = Adw.ComboRow()
-        self.game_mode.set_title(_("Game Mode"))
-        self.game_mode.set_model(Gtk.StringList.new([_("Player vs Player"), _("Player vs Computer")]))
-        self.game_mode.set_selected(0)
-        mode_group.add(self.game_mode)
-
-        self.append(mode_group)
-
         prefs_group = Adw.PreferencesGroup()
         prefs_group.set_title(_("Game Settings"))
         prefs_group.set_description(_("Configure how the game starts"))
@@ -43,13 +69,6 @@ class MainView(Gtk.Box):
         self.cards_spin.set_adjustment(Gtk.Adjustment(value=7, lower=1, upper=20, step_increment=1))
         self.cards_spin.set_digits(0)
         prefs_group.add(self.cards_spin)
-
-        self.players_spin = Adw.SpinRow()
-        self.players_spin.set_title(_("Number of players"))
-        self.players_spin.set_subtitle(_("How many players will participate"))
-        self.players_spin.set_adjustment(Gtk.Adjustment(value=2, lower=2, upper=8, step_increment=1))
-        self.players_spin.set_digits(0)
-        prefs_group.add(self.players_spin)
 
         self.card_stacking = Adw.SwitchRow()
         self.card_stacking.set_title(_("Card stacking"))
@@ -69,12 +88,4 @@ class MainView(Gtk.Box):
         self.new_game_btn.add_css_class("suggested-action")
         buttons_box.append(self.new_game_btn)
 
-        self.settings_btn = Gtk.Button(label=_("Settings"))
-        self.settings_btn.set_size_request(100, 50)
-        self.settings_btn.add_css_class("pill")
-        buttons_box.append(self.settings_btn)
-
         self.append(buttons_box)
-
-    def is_vs_computer(self) -> bool:
-        return self.game_mode.get_selected() == 1

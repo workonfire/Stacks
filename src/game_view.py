@@ -6,8 +6,8 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Adw, GLib
-from uno.game import Game, Player, Card, Turn, GameEventType
-from uno.enums import CardColor
+from stackslib.game import Game, Player, Card, Turn
+from stackslib.enums import CardColor, GameEventType
 from i18n import _
 
 

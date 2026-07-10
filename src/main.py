@@ -1,5 +1,6 @@
 import sys
 import gi
+from pathlib import Path
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -30,13 +31,15 @@ class StacksApplication(Adw.Application):
     def load_icons():
         display = Gdk.Display.get_default()
         icon_theme = Gtk.IconTheme.get_for_display(display)
-        icon_theme.add_search_path("icons")
+        icons_path = Path(__file__).resolve().parent / "icons"
+        icon_theme.add_search_path(str(icons_path))
 
     @staticmethod
     def load_css():
         css_provider = Gtk.CssProvider()
         try:
-            css_provider.load_from_path("style.css")
+            css_path = Path(__file__).resolve().parent / "style.css"
+            css_provider.load_from_path(str(css_path))
             display = Gdk.Display.get_default()
             Gtk.StyleContext.add_provider_for_display(
                 display,

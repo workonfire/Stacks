@@ -11,11 +11,15 @@ authors = [
 ]
 dependencies = [
     "PyGObject>=3.42.0",
+    "stackslib @ git+https://github.com/workonfire/stackslib.git",
 ]
 requires-python = ">=3.10"
 
 [project.scripts]
 my-gtk4-app = "src.main:main"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src"]
