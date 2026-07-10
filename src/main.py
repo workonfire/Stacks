@@ -1,3 +1,4 @@
+import os
 import sys
 import gi
 from pathlib import Path
@@ -16,7 +17,7 @@ class StacksApplication(Adw.Application):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.win = None
-        self.set_application_id(APP_ID)
+        self.set_application_id(os.environ.get("STACKS_APP_ID", APP_ID))
         self.connect('activate', self.on_activate)
 
     def on_activate(self, app):
